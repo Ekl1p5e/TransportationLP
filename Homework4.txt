@@ -1,0 +1,31 @@
+12.4-2 EXCEL
+------------
+Maximize
+Z= 3x1 + 5x2
+
+Subject to
+x1 <= 4
+2x2 <= 12
+3x1 + 2x2 <= 18
+x1 - My1 <= 0
+x2 + My1 <= M
+
+yi binary
+xi >= 0
+
+12.3-1 OPL
+----------
+Maximize
+Z = 70x1 + 60x2 + 90x3 + 80x4 - 50000y1 - 40000y2 - 70000y3 - 60000y4
+
+Subject to
+5x1 + 3x2 + 6x3 + 4x4 - My5 <= 6000
+4x1 + 6x2 + 3x3 + 5x4 + My5 <= 6000 + M
+
+y1 + y2 + y3 + y4 <= 2
+y3 + y4 <= y1 + y2
+
+yi binary
+xi >= 0
+
+

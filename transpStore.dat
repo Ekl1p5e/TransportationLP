@@ -1,0 +1,407 @@
+//--------------------------------------------------
+// transportation file produced by reading 
+// excel file into R using XLConnect 
+// and using R commands to output textfile 
+//--------------------------------------------------
+
+Factories = { fA fB fC fD fE };
+Warehouses = { wA wB wC wD wE wF wG wH wI wJ };
+Stores = { sA sB sC sD sE sF sG sH sI sJ sK sL sM sN sO sP sQ sR sS sT };
+Products = { pA pB pC pD pE };
+CapacityFW = 1000;
+CapacityWS = 800;
+MaxStorage = 2300;
+TableRoutesFW = {
+ < pA, fA, wA, 2 >
+ < pA, fA, wB, 2 >
+ < pA, fA, wC, 3 >
+ < pA, fA, wD, 3 >
+ < pA, fB, wC, 3 >
+ < pA, fB, wD, 3 >
+ < pA, fB, wE, 2 >
+ < pA, fB, wF, 2 >
+ < pA, fC, wE, 2 >
+ < pA, fC, wF, 2 >
+ < pA, fC, wG, 2 >
+ < pA, fC, wH, 3 >
+ < pA, fC, wI, 3 >
+ < pA, fC, wJ, 3 >
+ < pB, fA, wA, 2 >
+ < pB, fA, wB, 2 >
+ < pB, fA, wC, 3 >
+ < pB, fA, wD, 3 >
+ < pB, fB, wC, 3 >
+ < pB, fB, wD, 3 >
+ < pB, fB, wE, 2 >
+ < pB, fB, wF, 2 >
+ < pB, fC, wE, 2 >
+ < pB, fC, wF, 2 >
+ < pB, fC, wG, 2 >
+ < pB, fC, wH, 3 >
+ < pB, fC, wI, 3 >
+ < pB, fC, wJ, 3 >
+ < pC, fA, wA, 2 >
+ < pC, fA, wB, 2 >
+ < pC, fA, wC, 3 >
+ < pC, fA, wD, 3 >
+ < pC, fA, wE, 5 >
+ < pC, fA, wF, 5 >
+ < pC, fB, wE, 6 >
+ < pC, fB, wF, 6 >
+ < pC, fB, wG, 3 >
+ < pC, fB, wH, 2 >
+ < pC, fB, wI, 2 >
+ < pC, fB, wJ, 2 >
+ < pD, fD, wA, 6 >
+ < pD, fD, wB, 5 >
+ < pD, fD, wC, 4 >
+ < pD, fD, wD, 3 >
+ < pD, fD, wE, 2 >
+ < pD, fD, wF, 2 >
+ < pD, fD, wG, 2 >
+ < pD, fE, wE, 3 >
+ < pD, fE, wF, 3 >
+ < pD, fE, wG, 2 >
+ < pD, fE, wH, 3 >
+ < pD, fE, wI, 1 >
+ < pD, fE, wJ, 1 >
+ < pE, fC, wA, 3 >
+ < pE, fC, wB, 3 >
+ < pE, fC, wC, 2 >
+ < pE, fD, wA, 6 >
+ < pE, fD, wB, 5 >
+ < pE, fD, wC, 4 >
+ < pE, fD, wD, 3 >
+ < pE, fD, wE, 2 >
+ < pE, fD, wF, 2 >
+ < pE, fD, wG, 2 >
+ < pE, fE, wE, 3 >
+ < pE, fE, wF, 3 >
+ < pE, fE, wG, 2 >
+ < pE, fE, wH, 3 >
+ < pE, fE, wI, 1 >
+ < pE, fE, wJ, 1 >
+};
+
+TableRoutesWS = {
+ < pA, wA, sA, 2 >
+ < pA, wA, sB, 2 >
+ < pA, wA, sC, 3 >
+ < pA, wA, sD, 4 >
+ < pA, wB, sC, 1 >
+ < pA, wB, sD, 2 >
+ < pA, wB, sE, 3 >
+ < pA, wB, sF, 4 >
+ < pA, wC, sE, 2 >
+ < pA, wC, sF, 1 >
+ < pA, wC, sG, 3 >
+ < pA, wC, sH, 4 >
+ < pA, wD, sG, 2 >
+ < pA, wD, sH, 2 >
+ < pA, wD, sI, 4 >
+ < pA, wD, sJ, 4 >
+ < pA, wE, sI, 1 >
+ < pA, wE, sJ, 2 >
+ < pA, wE, sK, 4 >
+ < pA, wE, sL, 3 >
+ < pA, wF, sK, 5 >
+ < pA, wF, sL, 6 >
+ < pA, wF, sM, 5 >
+ < pA, wF, sN, 7 >
+ < pA, wG, sM, 2 >
+ < pA, wG, sN, 2 >
+ < pA, wG, sO, 4 >
+ < pA, wG, sP, 3 >
+ < pA, wH, sO, 2 >
+ < pA, wH, sP, 1 >
+ < pA, wH, sQ, 4 >
+ < pA, wH, sR, 4 >
+ < pA, wI, sQ, 1 >
+ < pA, wI, sR, 1 >
+ < pA, wI, sS, 4 >
+ < pA, wI, sT, 5 >
+ < pA, wJ, sS, 1 >
+ < pA, wJ, sT, 2 >
+ < pA, wJ, sA, 4 >
+ < pA, wJ, sB, 5 >
+ < pB, wA, sA, 2 >
+ < pB, wA, sB, 2 >
+ < pB, wA, sC, 3 >
+ < pB, wA, sD, 4 >
+ < pB, wB, sC, 1 >
+ < pB, wB, sD, 2 >
+ < pB, wB, sE, 3 >
+ < pB, wB, sF, 4 >
+ < pB, wC, sE, 2 >
+ < pB, wC, sF, 1 >
+ < pB, wC, sG, 3 >
+ < pB, wC, sH, 4 >
+ < pB, wD, sG, 2 >
+ < pB, wD, sH, 2 >
+ < pB, wD, sI, 4 >
+ < pB, wD, sJ, 4 >
+ < pB, wE, sI, 1 >
+ < pB, wE, sJ, 2 >
+ < pB, wE, sK, 4 >
+ < pB, wE, sL, 3 >
+ < pB, wF, sK, 5 >
+ < pB, wF, sL, 6 >
+ < pB, wF, sM, 5 >
+ < pB, wF, sN, 7 >
+ < pB, wG, sM, 2 >
+ < pB, wG, sN, 2 >
+ < pB, wG, sO, 4 >
+ < pB, wG, sP, 3 >
+ < pB, wH, sO, 2 >
+ < pB, wH, sP, 1 >
+ < pB, wH, sQ, 4 >
+ < pB, wH, sR, 4 >
+ < pB, wI, sQ, 1 >
+ < pB, wI, sR, 1 >
+ < pB, wI, sS, 4 >
+ < pB, wI, sT, 5 >
+ < pB, wJ, sS, 1 >
+ < pB, wJ, sT, 2 >
+ < pB, wJ, sA, 4 >
+ < pB, wJ, sB, 5 >
+ < pC, wA, sA, 2 >
+ < pC, wA, sB, 2 >
+ < pC, wA, sC, 3 >
+ < pC, wA, sD, 4 >
+ < pC, wB, sC, 1 >
+ < pC, wB, sD, 2 >
+ < pC, wB, sE, 3 >
+ < pC, wB, sF, 4 >
+ < pC, wC, sE, 2 >
+ < pC, wC, sF, 1 >
+ < pC, wC, sG, 3 >
+ < pC, wC, sH, 4 >
+ < pC, wD, sG, 2 >
+ < pC, wD, sH, 2 >
+ < pC, wD, sI, 4 >
+ < pC, wD, sJ, 4 >
+ < pC, wE, sI, 1 >
+ < pC, wE, sJ, 2 >
+ < pC, wE, sK, 4 >
+ < pC, wE, sL, 3 >
+ < pC, wF, sK, 5 >
+ < pC, wF, sL, 6 >
+ < pC, wF, sM, 5 >
+ < pC, wF, sN, 7 >
+ < pC, wG, sM, 2 >
+ < pC, wG, sN, 2 >
+ < pC, wG, sO, 4 >
+ < pC, wG, sP, 3 >
+ < pC, wH, sO, 2 >
+ < pC, wH, sP, 1 >
+ < pC, wH, sQ, 4 >
+ < pC, wH, sR, 4 >
+ < pC, wI, sQ, 1 >
+ < pC, wI, sR, 1 >
+ < pC, wI, sS, 4 >
+ < pC, wI, sT, 5 >
+ < pC, wJ, sS, 1 >
+ < pC, wJ, sT, 2 >
+ < pC, wJ, sA, 4 >
+ < pC, wJ, sB, 5 >
+ < pD, wA, sA, 2 >
+ < pD, wA, sB, 2 >
+ < pD, wA, sC, 3 >
+ < pD, wA, sD, 4 >
+ < pD, wB, sC, 1 >
+ < pD, wB, sD, 2 >
+ < pD, wB, sE, 3 >
+ < pD, wB, sF, 4 >
+ < pD, wC, sE, 2 >
+ < pD, wC, sF, 1 >
+ < pD, wC, sG, 3 >
+ < pD, wC, sH, 4 >
+ < pD, wD, sG, 2 >
+ < pD, wD, sH, 2 >
+ < pD, wD, sI, 4 >
+ < pD, wD, sJ, 4 >
+ < pD, wE, sI, 1 >
+ < pD, wE, sJ, 2 >
+ < pD, wE, sK, 4 >
+ < pD, wE, sL, 3 >
+ < pD, wF, sK, 5 >
+ < pD, wF, sL, 6 >
+ < pD, wF, sM, 5 >
+ < pD, wF, sN, 7 >
+ < pD, wG, sM, 2 >
+ < pD, wG, sN, 2 >
+ < pD, wG, sO, 4 >
+ < pD, wG, sP, 3 >
+ < pD, wH, sO, 2 >
+ < pD, wH, sP, 1 >
+ < pD, wH, sQ, 4 >
+ < pD, wH, sR, 4 >
+ < pD, wI, sQ, 1 >
+ < pD, wI, sR, 1 >
+ < pD, wI, sS, 4 >
+ < pD, wI, sT, 5 >
+ < pD, wJ, sS, 1 >
+ < pD, wJ, sT, 2 >
+ < pD, wJ, sA, 4 >
+ < pD, wJ, sB, 5 >
+ < pE, wA, sA, 2 >
+ < pE, wA, sB, 2 >
+ < pE, wA, sC, 3 >
+ < pE, wA, sD, 4 >
+ < pE, wB, sC, 1 >
+ < pE, wB, sD, 2 >
+ < pE, wB, sE, 3 >
+ < pE, wB, sF, 4 >
+ < pE, wC, sE, 2 >
+ < pE, wC, sF, 1 >
+ < pE, wC, sG, 3 >
+ < pE, wC, sH, 4 >
+ < pE, wD, sG, 2 >
+ < pE, wD, sH, 2 >
+ < pE, wD, sI, 4 >
+ < pE, wD, sJ, 4 >
+ < pE, wE, sI, 1 >
+ < pE, wE, sJ, 2 >
+ < pE, wE, sK, 4 >
+ < pE, wE, sL, 3 >
+ < pE, wF, sK, 5 >
+ < pE, wF, sL, 6 >
+ < pE, wF, sM, 5 >
+ < pE, wF, sN, 7 >
+ < pE, wG, sM, 2 >
+ < pE, wG, sN, 2 >
+ < pE, wG, sO, 4 >
+ < pE, wG, sP, 3 >
+ < pE, wH, sO, 2 >
+ < pE, wH, sP, 1 >
+ < pE, wH, sQ, 4 >
+ < pE, wH, sR, 4 >
+ < pE, wI, sQ, 1 >
+ < pE, wI, sR, 1 >
+ < pE, wI, sS, 4 >
+ < pE, wI, sT, 5 >
+ < pE, wJ, sS, 1 >
+ < pE, wJ, sT, 2 >
+ < pE, wJ, sA, 4 >
+ < pE, wJ, sB, 5 >
+};
+
+Supply = #[
+ < pA, fA, 700 >: NA
+ < pA, fB, 560 >: NA
+ < pA, fC, 800 >: 2060
+ < pB, fA, 500 >: NA
+ < pB, fB, 1000 >: NA
+ < pB, fC, 600 >: 2100
+ < pC, fA, 400 >: NA
+ < pC, fB, 670 >: 1070
+ < pD, fD, 300 >: NA
+ < pD, fE, 280 >: 580
+ < pE, fC, 1400 >: NA
+ < pE, fD, 1000 >: NA
+ < pE, fE, 1760 >: 4160
+]#;
+
+Demand = #[
+ < pA, sA >: 150
+ < pA, sB >: 90
+ < pA, sC >: 80
+ < pA, sD >: 140
+ < pA, sE >: 60
+ < pA, sF >: 70
+ < pA, sG >: 110
+ < pA, sH >: 120
+ < pA, sI >: 90
+ < pA, sJ >: 200
+ < pA, sK >: 180
+ < pA, sL >: 80
+ < pA, sM >: 60
+ < pA, sN >: 110
+ < pA, sO >: 120
+ < pA, sP >: 60
+ < pA, sQ >: 70
+ < pA, sR >: 50
+ < pA, sS >: 100
+ < pA, sT >: 120
+ < pB, sA >: 160
+ < pB, sB >: 100
+ < pB, sC >: 70
+ < pB, sD >: 130
+ < pB, sE >: 70
+ < pB, sF >: 80
+ < pB, sG >: 100
+ < pB, sH >: 110
+ < pB, sI >: 100
+ < pB, sJ >: 210
+ < pB, sK >: 190
+ < pB, sL >: 90
+ < pB, sM >: 50
+ < pB, sN >: 100
+ < pB, sO >: 110
+ < pB, sP >: 50
+ < pB, sQ >: 60
+ < pB, sR >: 80
+ < pB, sS >: 110
+ < pB, sT >: 130
+ < pC, sA >: 80
+ < pC, sB >: 60
+ < pC, sC >: 30
+ < pC, sD >: 70
+ < pC, sE >: 30
+ < pC, sF >: 40
+ < pC, sG >: 50
+ < pC, sH >: 60
+ < pC, sI >: 40
+ < pC, sJ >: 110
+ < pC, sK >: 100
+ < pC, sL >: 40
+ < pC, sM >: 30
+ < pC, sN >: 50
+ < pC, sO >: 60
+ < pC, sP >: 20
+ < pC, sQ >: 30
+ < pC, sR >: 40
+ < pC, sS >: 60
+ < pC, sT >: 70
+ < pD, sA >: 40
+ < pD, sB >: 30
+ < pD, sC >: 20
+ < pD, sD >: 40
+ < pD, sE >: 10
+ < pD, sF >: 20
+ < pD, sG >: 30
+ < pD, sH >: 40
+ < pD, sI >: 20
+ < pD, sJ >: 50
+ < pD, sK >: 50
+ < pD, sL >: 20
+ < pD, sM >: 30
+ < pD, sN >: 20
+ < pD, sO >: 40
+ < pD, sP >: 10
+ < pD, sQ >: 20
+ < pD, sR >: 20
+ < pD, sS >: 10
+ < pD, sT >: 60
+ < pE, sA >: 300
+ < pE, sB >: 200
+ < pE, sC >: 150
+ < pE, sD >: 300
+ < pE, sE >: 140
+ < pE, sF >: 150
+ < pE, sG >: 240
+ < pE, sH >: 210
+ < pE, sI >: 180
+ < pE, sJ >: 390
+ < pE, sK >: 360
+ < pE, sL >: 150
+ < pE, sM >: 140
+ < pE, sN >: 200
+ < pE, sO >: 250
+ < pE, sP >: 130
+ < pE, sQ >: 130
+ < pE, sR >: 100
+ < pE, sS >: 210
+ < pE, sT >: 230
+]#;
+
